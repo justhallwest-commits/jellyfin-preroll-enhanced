@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Pre-Roll Videos Enhanced Configuration</title>
+</head>
+<body>
+    <div id="PreRollEnhancedConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-select,emby-checkbox">
+        <div data-role="content">
+            <div class="content-primary">
+                <form id="PreRollEnhancedConfigForm">
+                    <h1 class="sectionTitle">Pre-Roll Videos Enhanced</h1>
+                    <p>Play pre-roll videos before movies and TV shows on ALL clients using server-side session management.</p>
+
+                    <!-- Library Selection -->
+                    <div class="selectContainer">
+                        <label class="selectLabel" for="selectPreRollLibrary">Pre-Roll Library:</label>
+                        <select is="emby-select" id="selectPreRollLibrary" name="selectPreRollLibrary" class="emby-select-withcolor emby-select">
+                            <option value="">None (Disabled)</option>
+                        </select>
+                        <div class="fieldDescription">Select the library containing your pre-roll videos. Videos should be stored as "Movies" content type.</div>
+                    </div>
+
+                    <br/>
+                    
+                    <!-- Content Type Enablement -->
+                    <h2 class="sectionTitle">Enable Pre-Rolls For:</h2>
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkEnableForMovies" />
+                            <span>Movies</span>
+                        </label>
+                        <div class="fieldDescription">Play pre-rolls before movies</div>
+                    </div>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkEnableForTvShows" />
+                            <span>TV Shows (Series)</span>
+                        </label>
+                        <div class="fieldDescription">Play pre-rolls when starting a TV series</div>
+                    </div>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkEnableForEpisodes" />
+                            <span>TV Episodes</span>
+                        </label>
+                        <div class="fieldDescription">Play pre-rolls before each TV episode</div>
+                    </div>
+
+                    <br/>
+
+                    <!-- Metadata Selection Rules -->
+                    <h2 class="sectionTitle">Metadata Selection Rules</h2>
+                    <p>Use metadata to intelligently match pre-rolls to content. If no rules match, a random pre-roll will be selected.</p>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkMatchName" />
+                            <span>Match Name (Tag)</span>
+                        </label>
+                        <div class="fieldDescription">Match pre-rolls with a tag matching the content name</div>
+                    </div>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkMatchYear" />
+                            <span>Match Year (Tag)</span>
+                        </label>
+                        <div class="fieldDescription">Match pre-rolls with a tag matching the release year (e.g., "1985")</div>
+                    </div>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkMatchDecade" />
+                            <span>Match Decade (Tag)</span>
+                        </label>
+                        <div class="fieldDescription">Match pre-rolls with a tag matching the decade (e.g., "1980s")</div>
+                    </div>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkMatchSeasonal" />
+                            <span>Match Seasonal Tags</span>
+                        </label>
+                        <div class="fieldDescription">Match pre-rolls with seasonal tags currently in season (defined below)</div>
+                    </div>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkMatchGenre" />
+                            <span>Match Genre</span>
+                        </label>
+                        <div class="fieldDescription">Match pre-rolls with overlapping genres</div>
+                    </div>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkMatchStudios" />
+                            <span>Match Studios</span>
+                        </label>
+                        <div class="fieldDescription">Match pre-rolls with overlapping studios</div>
+                    </div>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkRequireAllTags" />
+                            <span>Require ALL Tags (AND logic)</span>
+                        </label>
+                        <div class="fieldDescription">When enabled, pre-rolls must match ALL selected tag rules. Default is ANY (OR logic).</div>
+                    </div>
+
+                    <br/>
+
+                    <!-- Additional Options -->
+                    <h2 class="sectionTitle">Additional Options</h2>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkIgnoreOutOfSeason" />
+                            <span>Ignore Out-of-Season Pre-Rolls</span>
+                        </label>
+                        <div class="fieldDescription">Filter out pre-rolls with seasonal tags that are not currently in season</div>
+                    </div>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="chkEnforceRatingLimit" />
+                            <span>Enforce Rating Limit</span>
+                        </label>
+                        <div class="fieldDescription">Ensure pre-roll ratings do not exceed content ratings (e.g., don't show R-rated pre-rolls before PG-13 content)</div>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="txtLoopPreventionSeconds">Loop Prevention (seconds):</label>
+                        <input is="emby-input" type="number" id="txtLoopPreventionSeconds" min="0" max="300" step="1" class="emby-input" />
+                        <div class="fieldDescription">Minimum seconds between pre-roll triggers for the same content (prevents loops)</div>
+                    </div>
+
+                    <br/>
+
+                    <!-- Seasonal Tag Definitions -->
+                    <h2 class="sectionTitle">Seasonal Tag Definitions</h2>
+                    <p>Define time periods for seasonal pre-rolls (e.g., Christmas, Halloween). The year will be ignored - only month/day matter.</p>
+                    
+                    <div id="seasonalTagsContainer">
+                        <!-- Seasonal tags will be dynamically added here -->
+                    </div>
+
+                    <button is="emby-button" type="button" class="raised button-submit emby-button" id="btnAddSeasonalTag">
+                        <span>Add Seasonal Tag</span>
+                    </button>
+
+                    <br/><br/>
+
+                    <!-- Save Button -->
+                    <div>
+                        <button is="emby-button" type="submit" class="raised button-submit emby-button">
+                            <span>Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var PreRollEnhancedConfig = {
+                pluginUniqueId: 'e4f5b6c7-d8a9-4b1c-2d3e-4f5a6b7c8d9e',
+
+                loadConfiguration: function () {
+                    Dashboard.showLoadingMsg();
+
+                    // Load plugin configuration
+                    ApiClient.getPluginConfiguration(PreRollEnhancedConfig.pluginUniqueId).then(function (config) {
+                        // Set form values
+                        document.querySelector('#selectPreRollLibrary').value = config.PreRollLibraryId || '';
+                        document.querySelector('#chkEnableForMovies').checked = config.EnableForMovies;
+                        document.querySelector('#chkEnableForTvShows').checked = config.EnableForTvShows;
+                        document.querySelector('#chkEnableForEpisodes').checked = config.EnableForEpisodes;
+                        
+                        // Selection rules
+                        document.querySelector('#chkMatchName').checked = config.Rules.MatchName;
+                        document.querySelector('#chkMatchYear').checked = config.Rules.MatchYear;
+                        document.querySelector('#chkMatchDecade').checked = config.Rules.MatchDecade;
+                        document.querySelector('#chkMatchSeasonal').checked = config.Rules.MatchSeasonal;
+                        document.querySelector('#chkMatchGenre').checked = config.Rules.MatchGenre;
+                        document.querySelector('#chkMatchStudios').checked = config.Rules.MatchStudios;
+                        document.querySelector('#chkRequireAllTags').checked = config.Rules.RequireAllTags;
+
+                        // Additional options
+                        document.querySelector('#chkIgnoreOutOfSeason').checked = config.IgnoreOutOfSeason;
+                        document.querySelector('#chkEnforceRatingLimit').checked = config.EnforceRatingLimit;
+                        document.querySelector('#txtLoopPreventionSeconds').value = config.LoopPreventionSeconds || 30;
+
+                        // Load seasonal tags
+                        PreRollEnhancedConfig.loadSeasonalTags(config.SeasonalTags || []);
+
+                        Dashboard.hideLoadingMsg();
+                    });
+
+                    // Load libraries for dropdown
+                    PreRollEnhancedConfig.loadLibraries();
+                },
+
+                loadLibraries: function () {
+                    ApiClient.getVirtualFolders().then(function (folders) {
+                        var select = document.querySelector('#selectPreRollLibrary');
+                        
+                        // Add library options
+                        folders.forEach(function (folder) {
+                            var option = document.createElement('option');
+                            option.value = folder.ItemId;
+                            option.innerText = folder.Name;
+                            select.appendChild(option);
+                        });
+                    });
+                },
+
+                loadSeasonalTags: function (seasonalTags) {
+                    var container = document.querySelector('#seasonalTagsContainer');
+                    container.innerHTML = '';
+
+                    seasonalTags.forEach(function (tag, index) {
+                        PreRollEnhancedConfig.addSeasonalTagRow(tag, index);
+                    });
+                },
+
+                addSeasonalTagRow: function (tag, index) {
+                    var container = document.querySelector('#seasonalTagsContainer');
+                    
+                    var row = document.createElement('div');
+                    row.className = 'seasonalTagRow';
+                    row.style.marginBottom = '15px';
+                    row.style.padding = '10px';
+                    row.style.border = '1px solid rgba(255,255,255,0.1)';
+                    row.style.borderRadius = '4px';
+                    
+                    row.innerHTML = `
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; align-items: end;">
+                            <div class="inputContainer">
+                                <label class="inputLabel">Tag Name:</label>
+                                <input is="emby-input" type="text" class="seasonalTag" value="${tag.Tag || ''}" placeholder="e.g., christmas" />
+                            </div>
+                            <div class="inputContainer">
+                                <label class="inputLabel">Start Date:</label>
+                                <input is="emby-input" type="date" class="seasonalStart" value="${tag.StartDate ? tag.StartDate.split('T')[0] : ''}" />
+                            </div>
+                            <div class="inputContainer">
+                                <label class="inputLabel">End Date:</label>
+                                <input is="emby-input" type="date" class="seasonalEnd" value="${tag.EndDate ? tag.EndDate.split('T')[0] : ''}" />
+                            </div>
+                            <button is="emby-button" type="button" class="raised button-cancel btnRemoveSeasonalTag">Remove</button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(row);
+
+                    // Add remove handler
+                    row.querySelector('.btnRemoveSeasonalTag').addEventListener('click', function () {
+                        row.remove();
+                    });
+                },
+
+                saveConfiguration: function () {
+                    Dashboard.showLoadingMsg();
+
+                    ApiClient.getPluginConfiguration(PreRollEnhancedConfig.pluginUniqueId).then(function (config) {
+                        // Update config from form
+                        config.PreRollLibraryId = document.querySelector('#selectPreRollLibrary').value;
+                        config.EnableForMovies = document.querySelector('#chkEnableForMovies').checked;
+                        config.EnableForTvShows = document.querySelector('#chkEnableForTvShows').checked;
+                        config.EnableForEpisodes = document.querySelector('#chkEnableForEpisodes').checked;
+
+                        // Selection rules
+                        config.Rules = {
+                            MatchName: document.querySelector('#chkMatchName').checked,
+                            MatchYear: document.querySelector('#chkMatchYear').checked,
+                            MatchDecade: document.querySelector('#chkMatchDecade').checked,
+                            MatchSeasonal: document.querySelector('#chkMatchSeasonal').checked,
+                            MatchGenre: document.querySelector('#chkMatchGenre').checked,
+                            MatchStudios: document.querySelector('#chkMatchStudios').checked,
+                            RequireAllTags: document.querySelector('#chkRequireAllTags').checked
+                        };
+
+                        // Additional options
+                        config.IgnoreOutOfSeason = document.querySelector('#chkIgnoreOutOfSeason').checked;
+                        config.EnforceRatingLimit = document.querySelector('#chkEnforceRatingLimit').checked;
+                        config.LoopPreventionSeconds = parseInt(document.querySelector('#txtLoopPreventionSeconds').value) || 30;
+
+                        // Collect seasonal tags
+                        var seasonalTags = [];
+                        document.querySelectorAll('.seasonalTagRow').forEach(function (row) {
+                            var tag = {
+                                Tag: row.querySelector('.seasonalTag').value,
+                                StartDate: row.querySelector('.seasonalStart').value + 'T00:00:00',
+                                EndDate: row.querySelector('.seasonalEnd').value + 'T00:00:00'
+                            };
+                            if (tag.Tag && tag.StartDate && tag.EndDate) {
+                                seasonalTags.push(tag);
+                            }
+                        });
+                        config.SeasonalTags = seasonalTags;
+
+                        // Save configuration
+                        ApiClient.updatePluginConfiguration(PreRollEnhancedConfig.pluginUniqueId, config).then(function () {
+                            Dashboard.processPluginConfigurationUpdateResult();
+                        });
+                    });
+                }
+            };
+
+            // Initialize page
+            document.querySelector('#PreRollEnhancedConfigPage').addEventListener('pageshow', function () {
+                PreRollEnhancedConfig.loadConfiguration();
+            });
+
+            // Handle form submission
+            document.querySelector('#PreRollEnhancedConfigForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                PreRollEnhancedConfig.saveConfiguration();
+                return false;
+            });
+
+            // Handle add seasonal tag button
+            document.querySelector('#btnAddSeasonalTag').addEventListener('click', function () {
+                PreRollEnhancedConfig.addSeasonalTagRow({}, 0);
+            });
+        </script>
+    </div>
+</body>
+</html>
