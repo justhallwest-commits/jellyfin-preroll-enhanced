@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Jellyfin.Data.Entities;
 using Jellyfin.Plugin.PreRollEnhanced.Configuration;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Movies;
@@ -23,7 +22,6 @@ namespace Jellyfin.Plugin.PreRollEnhanced
     {
         private readonly ISessionManager _sessionManager;
         private readonly ILibraryManager _libraryManager;
-        private readonly IUserManager _userManager;
         private readonly ILogger<PreRollManager> _logger;
         
         // State tracking for loop prevention
@@ -33,12 +31,10 @@ namespace Jellyfin.Plugin.PreRollEnhanced
         public PreRollManager(
             ISessionManager sessionManager,
             ILibraryManager libraryManager,
-            IUserManager userManager,
             ILogger<PreRollManager> logger)
         {
             _sessionManager = sessionManager;
             _libraryManager = libraryManager;
-            _userManager = userManager;
             _logger = logger;
 
             // Subscribe to playback start events
